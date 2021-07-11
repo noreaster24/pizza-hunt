@@ -8,6 +8,7 @@ const $commentSection = document.querySelector('#comment-section');
 const $newCommentForm = document.querySelector('#new-comment-form');
 
 let pizzaId;
+
 function getPizza() {
   // get id of pizza
   const searchParams = new URLSearchParams(document.location.search.substring(1));
@@ -16,8 +17,9 @@ function getPizza() {
   // get pizzaInfo
   fetch(`/api/pizzas/${pizzaId}`)
     .then(response => {
-      // check for a 4xx or 5xx error from server
+      console.log(response);
       if (!response.ok) {
+        console.log('hi');
         throw new Error({ message: 'Something went wrong!' });
       }
 
@@ -111,7 +113,8 @@ function handleNewCommentSubmit(event) {
   fetch(`/api/comments/${pizzaId}`, {
     method: 'POST',
     headers: {
-      Accept: 'application/json'
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify(formData)
   })
